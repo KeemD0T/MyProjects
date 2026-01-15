@@ -73,4 +73,5 @@ I played a major role in both the **visual and collaborative side** of the proje
 ## Project Structure
 
 Main scripts and assets can be found here:
-'siege_control_pause_and_victory_screen/scenes'
+`siege_control_pause_and_victory_screen/scenes`
+`siege_control_pause_and_victory_screen/scripts`
