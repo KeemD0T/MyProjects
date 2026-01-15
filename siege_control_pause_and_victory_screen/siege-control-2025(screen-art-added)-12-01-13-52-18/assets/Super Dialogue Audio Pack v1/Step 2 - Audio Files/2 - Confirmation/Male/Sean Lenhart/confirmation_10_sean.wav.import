@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bpwqy6ssussht"
+path="res://.godot/imported/confirmation_10_sean.wav-19aec52fd765d30d984c260c017fdee5.sample"
+
+[deps]
+
+source_file="res://assets/Super Dialogue Audio Pack v1/Step 2 - Audio Files/2 - Confirmation/Male/Sean Lenhart/confirmation_10_sean.wav"
+dest_files=["res://.godot/imported/confirmation_10_sean.wav-19aec52fd765d30d984c260c017fdee5.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

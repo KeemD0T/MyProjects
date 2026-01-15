@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://q2n5vd2248a"]
+
+[ext_resource type="Script" uid="uid://bbgl52xfuojgo" path="res://scripts/settings_button.gd" id="1_jxe1r"]
+
+[node name="SettingsButton" type="Node2D"]
+script = ExtResource("1_jxe1r")
+
+[node name="Button" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Settings"

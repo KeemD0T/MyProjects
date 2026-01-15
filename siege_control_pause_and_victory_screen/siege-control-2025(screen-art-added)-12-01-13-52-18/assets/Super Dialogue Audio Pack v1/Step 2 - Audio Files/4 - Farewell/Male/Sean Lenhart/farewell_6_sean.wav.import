@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://qdpguupsgfuy"
+path="res://.godot/imported/farewell_6_sean.wav-6145d3ffc48ef08f0ac57a4a9d88fd33.sample"
+
+[deps]
+
+source_file="res://assets/Super Dialogue Audio Pack v1/Step 2 - Audio Files/4 - Farewell/Male/Sean Lenhart/farewell_6_sean.wav"
+dest_files=["res://.godot/imported/farewell_6_sean.wav-6145d3ffc48ef08f0ac57a4a9d88fd33.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

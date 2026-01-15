@@ -1,0 +1,456 @@
+[gd_scene load_steps=29 format=3 uid="uid://y4qxrvnagk2r"]
+
+[ext_resource type="PackedScene" uid="uid://dwo8ag8ur46uh" path="res://scenes/settings_2.tscn" id="1_uhngf"]
+[ext_resource type="Texture2D" uid="uid://s6bcmxaify11" path="res://assets/Shop Art/Shop_button1.PNG" id="2_62piq"]
+[ext_resource type="PackedScene" uid="uid://dx6i2xgyd6ri3" path="res://scenes/store.tscn" id="3_d7vmb"]
+[ext_resource type="FontFile" uid="uid://d1r7kik1pjse2" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="4_t8tsi"]
+[ext_resource type="Script" uid="uid://bcb720sixtym" path="res://scripts/game_manager.gd" id="5_fk403"]
+[ext_resource type="AudioStream" uid="uid://sttuf577lp1m" path="res://Sounds/SFX/game over sound/game-over-417465.mp3" id="6_d3iuc"]
+[ext_resource type="AudioStream" uid="uid://cav6rf7vejo8t" path="res://Sounds/SFX/game over sound/kl-peach-game-over-ii-135684.mp3" id="7_ctdjg"]
+[ext_resource type="Texture2D" uid="uid://cphsftspdovnm" path="res://assets/sprites/world_tileset.png" id="8_1woso"]
+[ext_resource type="Texture2D" uid="uid://crj5i1gem1ntf" path="res://assets/Plants/cacti-pixel-removebg-preview.png" id="9_id57a"]
+[ext_resource type="Texture2D" uid="uid://dmbmkts1es00i" path="res://assets/Plants/cacti-pixel3 (1).PNG" id="10_dhkv5"]
+[ext_resource type="Texture2D" uid="uid://ebu2gu5d3v33" path="res://assets/Plants/cacti-pixel2 (1).PNG" id="11_suf6b"]
+[ext_resource type="Texture2D" uid="uid://q3gmt7yj3fci" path="res://assets/_boss/NightTimeBackground.png" id="12_uhngf"]
+[ext_resource type="Texture2D" uid="uid://cl46f20ysqiyi" path="res://assets/pixelated_Floor.png" id="13_gcxhb"]
+[ext_resource type="PackedScene" uid="uid://qscxlno0fsdn" path="res://scenes/Castle.tscn" id="14_n78pn"]
+[ext_resource type="PackedScene" uid="uid://p4sdp0ysh5u1" path="res://scenes/coin.tscn" id="15_piqte"]
+[ext_resource type="PackedScene" uid="uid://d3lrhikt6x65w" path="res://scenes/player.tscn" id="16_db2ke"]
+[ext_resource type="Script" uid="uid://duyxf3peg8hge" path="res://scripts/hud.gd" id="17_62thy"]
+[ext_resource type="Texture2D" uid="uid://b70m8004xrupr" path="res://assets/Shop Art/Shop_Bar.PNG" id="18_wvwll"]
+[ext_resource type="Script" uid="uid://126oov18dj3u" path="res://coin_label.gd" id="19_a21u1"]
+[ext_resource type="AudioStream" uid="uid://dls4frayi1ix4" path="res://Sounds/Music/Background music/medieval-waltz-music-412748.mp3" id="20_6oxrt"]
+[ext_resource type="PackedScene" uid="uid://b8mg6dlhvnepv" path="res://scenes/the_final_boss.tscn" id="21_875eh"]
+[ext_resource type="PackedScene" uid="uid://d2smdsee54tl6" path="res://scenes/flying_eye.tscn" id="22_8w234"]
+
+[sub_resource type="GDScript" id="GDScript_e36ub"]
+script/source = "extends Node
+
+func _on_settings_button_pressed() -> void:
+	get_tree().change_scene_to_file(\"res://settings_screens.tscn\")
+	print(\"Pressed\")
+"
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_e2o6t"]
+normal = Vector2(1, 0)
+distance = -239.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_j5wjh"]
+normal = Vector2(-1, 0)
+distance = -242.99722
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_feb5d"]
+texture = ExtResource("8_1woso")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:2/0 = 0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:2/0 = 0
+5:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:3/0 = 0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+2:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+3:4/0 = 0
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:4/0 = 0
+4:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+4:8/0 = 0
+0:9/0 = 0
+1:9/0 = 0
+2:9/0 = 0
+3:9/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+2:10/0 = 0
+3:10/0 = 0
+0:11/0 = 0
+1:11/0 = 0
+2:11/0 = 0
+0:12/0 = 0
+1:12/0 = 0
+2:12/0 = 0
+0:13/0 = 0
+1:13/0 = 0
+2:13/0 = 0
+0:14/0 = 0
+1:14/0 = 0
+2:14/0 = 0
+0:15/0 = 0
+1:15/0 = 0
+8:0/0 = 0
+8:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+8:1/0 = 0
+8:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:0/0 = 0
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+6:1/0 = 0
+6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:2/0 = 0
+6:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:2/0 = 0
+7:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:2/0 = 0
+8:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:15/0 = 0
+3:14/0 = 0
+3:13/0 = 0
+3:12/0 = 0
+3:11/0 = 0
+6:10/0 = 0
+6:9/0 = 0
+5:9/0 = 0
+4:9/0 = 0
+4:10/0 = 0
+7:9/0 = 0
+7:7/0 = 0
+8:7/0 = 0
+7:3/0 = 0
+7:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:4/0 = 0
+7:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:4/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+9:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5.935338, -3.2374563, 5.5756207, -3.4173155, 6.115196, 8, -5.935339, 8)
+9:4/0 = 0
+9:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5.935338, -3.2374563, 5.5756207, -3.4173155, 6.115196, 8, -5.935339, 8)
+5:3/0 = 0
+6:3/0 = 0
+6:4/0 = 0
+5:4/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+7:6/0 = 0
+8:6/0 = 0
+9:6/0 = 0
+9:7/0 = 0
+6:7/0 = 0
+6:8/0 = 0
+5:8/0 = 0
+5:7/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+8:5/0 = 0
+8:8/0 = 0
+7:8/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+11:2/0 = 0
+4:13/0 = 0
+4:14/0 = 0
+5:13/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_fc0e3"]
+tile_size = Vector2i(15, 16)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_feb5d")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hve3p"]
+size = Vector2(626.0831, 132.54439)
+
+[node name="Game" type="Node2D"]
+
+[node name="Settings" type="CanvasLayer" parent="."]
+
+[node name="Settings2" parent="Settings" instance=ExtResource("1_uhngf")]
+visible = false
+offset_left = 689.0
+offset_top = 142.0
+offset_right = -165.0
+offset_bottom = -111.0
+
+[node name="ShopManager" type="CanvasLayer" parent="."]
+
+[node name="StoreButton" type="TextureButton" parent="ShopManager"]
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 64.0
+offset_bottom = 61.0
+scale = Vector2(1.5744839, 1.4228129)
+texture_normal = ExtResource("2_62piq")
+
+[node name="Store" parent="ShopManager/StoreButton" instance=ExtResource("3_d7vmb")]
+visible = false
+layout_mode = 1
+offset_left = 259.7677
+offset_top = 87.151306
+offset_right = 461.03098
+offset_bottom = 183.7193
+scale = Vector2(1.7088671, 1.4355781)
+
+[node name="Shop" type="Label" parent="ShopManager/StoreButton"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 14.0
+offset_right = 37.0
+offset_bottom = 22.0
+theme_override_fonts/font = ExtResource("4_t8tsi")
+theme_override_font_sizes/font_size = 8
+text = "Shop"
+
+[node name="GameManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_fk403")
+
+[node name="Settings" type="Node" parent="GameManager"]
+script = SubResource("GDScript_e36ub")
+
+[node name="BreakTimer" type="Timer" parent="GameManager"]
+one_shot = true
+
+[node name="SpawnPoints" type="Node2D" parent="GameManager"]
+
+[node name="SpawnTimer" type="Timer" parent="GameManager/SpawnPoints"]
+wait_time = 7.0
+
+[node name="Marker2D" type="Marker2D" parent="GameManager/SpawnPoints"]
+position = Vector2(97, 66)
+
+[node name="Marker2D2" type="Marker2D" parent="GameManager/SpawnPoints"]
+position = Vector2(216, 61)
+
+[node name="Marker2D3" type="Marker2D" parent="GameManager/SpawnPoints"]
+position = Vector2(74, -8)
+
+[node name="GameOverSound" type="AudioStreamPlayer2D" parent="GameManager"]
+stream = ExtResource("6_d3iuc")
+bus = &"SFX"
+
+[node name="GameOverMusic" type="AudioStreamPlayer2D" parent="GameManager"]
+stream = ExtResource("7_ctdjg")
+volume_db = -10.472
+bus = &"Music"
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+position = Vector2(-12, 2)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="TileMapLayer"]
+position = Vector2(14, -4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer/StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_e2o6t")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="TileMapLayer/StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_j5wjh")
+
+[node name="Game Layer" type="TileMapLayer" parent="TileMapLayer"]
+use_parent_material = true
+tile_map_data = PackedByteArray(0, 0, 251, 255, 4, 0, 0, 0, 8, 0, 3, 0, 0, 0, 240, 255, 1, 0, 0, 0, 4, 0, 5, 0, 0, 0, 232, 255, 12, 0, 0, 0, 3, 0, 2, 0, 0, 0)
+tile_set = SubResource("TileSet_fc0e3")
+
+[node name="Art" type="Node" parent="."]
+
+[node name="CactiPixelRemovebgPreview2" type="Sprite2D" parent="Art"]
+z_index = -2
+position = Vector2(158, 68.99999)
+scale = Vector2(0.21685077, 0.219697)
+texture = ExtResource("9_id57a")
+
+[node name="CactiPixel3(1)" type="Sprite2D" parent="Art"]
+z_index = -2
+position = Vector2(61, 72)
+scale = Vector2(0.29646015, 0.23986486)
+texture = ExtResource("10_dhkv5")
+
+[node name="CactiPixelRemovebgPreview3" type="Sprite2D" parent="Art"]
+z_index = -2
+position = Vector2(-31.999985, 70)
+scale = Vector2(0.21685077, 0.219697)
+texture = ExtResource("9_id57a")
+
+[node name="CactiPixel2(1)" type="Sprite2D" parent="Art"]
+z_index = -2
+position = Vector2(257, 70)
+scale = Vector2(0.2983871, 0.3141892)
+texture = ExtResource("11_suf6b")
+
+[node name="Background" type="Sprite2D" parent="Art"]
+z_index = -3
+position = Vector2(193.87495, -23.624994)
+scale = Vector2(0.707194, 0.6335449)
+texture = ExtResource("12_uhngf")
+
+[node name="Floor" type="Node" parent="."]
+
+[node name="FloorOutline" type="Sprite2D" parent="Floor"]
+modulate = Color(0.96862745, 1, 1, 1)
+self_modulate = Color(0.08297095, 0.0689553, 1.7473427e-08, 1)
+z_index = -1
+position = Vector2(87, 45)
+scale = Vector2(1.375, 0.9857143)
+texture = ExtResource("13_gcxhb")
+
+[node name="floor" type="Sprite2D" parent="Floor"]
+modulate = Color(0.96862745, 1, 1, 1)
+self_modulate = Color(0.25490198, 0.10980392, 0.46666667, 1)
+z_index = -1
+position = Vector2(90, 48.000008)
+scale = Vector2(1.3848001, 0.9657143)
+texture = ExtResource("13_gcxhb")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Floor/floor"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/floor/StaticBody2D"]
+position = Vector2(-1.0831909, 107.6923)
+shape = SubResource("RectangleShape2D_hve3p")
+debug_color = Color(0, 0.6, 0.7019608, 0.41960785)
+
+[node name="Castle" parent="." instance=ExtResource("14_n78pn")]
+z_index = 1
+position = Vector2(-206, 110)
+
+[node name="Coins" type="Node" parent="."]
+
+[node name="Coin" parent="Coins" instance=ExtResource("15_piqte")]
+position = Vector2(-86, 57)
+
+[node name="Coin2" parent="Coins" instance=ExtResource("15_piqte")]
+position = Vector2(-62, 39)
+
+[node name="Coin3" parent="Coins" instance=ExtResource("15_piqte")]
+position = Vector2(-46, 58)
+
+[node name="player" parent="." instance=ExtResource("16_db2ke")]
+z_index = 1
+position = Vector2(-110, 82)
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+position = Vector2(52, -60)
+offset = Vector2(0, 7)
+zoom = Vector2(3.5, 3.5)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 100
+script = ExtResource("17_62thy")
+
+[node name="WaveLabel" type="Label" parent="HUD"]
+custom_minimum_size = Vector2(20, 20)
+offset_left = 449.0
+offset_top = 28.0
+offset_right = 479.0
+offset_bottom = 51.0
+text = "test"
+
+[node name="TimerLabel" type="Label" parent="HUD"]
+offset_left = 450.0
+offset_top = 54.0
+offset_right = 488.0
+offset_bottom = 77.0
+text = "tset"
+
+[node name="SettingsButton" type="TextureButton" parent="HUD"]
+offset_left = 943.99994
+offset_top = 11.000002
+offset_right = 1051.9999
+offset_bottom = 56.0
+scale = Vector2(0.76000226, 1.4399993)
+texture_normal = ExtResource("18_wvwll")
+
+[node name="Label" type="Label" parent="HUD/SettingsButton"]
+layout_mode = 0
+offset_left = 21.052559
+offset_top = 10.416672
+offset_right = 81.05256
+offset_bottom = 18.416672
+theme_override_fonts/font = ExtResource("4_t8tsi")
+theme_override_font_sizes/font_size = 8
+text = "Settings"
+
+[node name="CoinCount" type="TextureRect" parent="HUD"]
+offset_left = 1037.0
+offset_top = 14.0
+offset_right = 1135.0
+offset_bottom = 54.0
+texture = ExtResource("18_wvwll")
+
+[node name="CoinLabel" type="Label" parent="HUD/CoinCount"]
+layout_mode = 0
+offset_right = 47.0
+offset_bottom = 23.0
+scale = Vector2(1.341507, 1.2656152)
+text = "Coins:"
+script = ExtResource("19_a21u1")
+
+[node name="BackGroundMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("20_6oxrt")
+volume_db = -14.393
+autoplay = true
+bus = &"Music"
+
+[node name="TheFinalBoss" parent="." instance=ExtResource("21_875eh")]
+position = Vector2(30, 59)
+
+[node name="flying_eye" parent="." instance=ExtResource("22_8w234")]
+position = Vector2(-20, 28)
+
+[connection signal="pressed" from="ShopManager/StoreButton" to="ShopManager/StoreButton/Store" method="_on_store_button_pressed"]
+[connection signal="pressed" from="HUD/SettingsButton" to="Settings/Settings2" method="_on_settings_button_pressed"]

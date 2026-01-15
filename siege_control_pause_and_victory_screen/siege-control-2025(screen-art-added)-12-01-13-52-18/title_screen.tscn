@@ -1,0 +1,189 @@
+[gd_scene load_steps=13 format=3 uid="uid://bn34qn464yipx"]
+
+[ext_resource type="Script" uid="uid://ssytk0nd3snt" path="res://title_screen.gd" id="1_05l2w"]
+[ext_resource type="Texture2D" uid="uid://cs65oc6gaimgv" path="res://Screen Art/Lose/TtileScreenArt/UpgradedTitleScreen.png" id="2_jqemp"]
+[ext_resource type="FontFile" uid="uid://c71meuy6p8gcb" path="res://assets/fonts/PixelOperator8.ttf" id="3_05l2w"]
+[ext_resource type="Texture2D" uid="uid://cdl4pbpnkg5nn" path="res://Screen Art/StartButton.png" id="4_013yr"]
+[ext_resource type="Texture2D" uid="uid://byv3eui2p86we" path="res://Screen Art/QuitButton.png" id="5_8vmu4"]
+[ext_resource type="FontFile" uid="uid://d1r7kik1pjse2" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="5_013yr"]
+[ext_resource type="AudioStream" uid="uid://cvvocyi6qivlk" path="res://Sounds/SFX/Title screen sounds/4. Ballad of Ashenwood.ogg" id="5_hafda"]
+[ext_resource type="AudioStream" uid="uid://bmhnjtx3ll6l8" path="res://Sounds/SFX/Title screen sounds/Startbutton.wav" id="6_tpml5"]
+[ext_resource type="PackedScene" uid="uid://dwo8ag8ur46uh" path="res://scenes/settings_2.tscn" id="9_8vmu4"]
+
+[sub_resource type="Animation" id="Animation_05l2w"]
+resource_name = "FadeOut"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../ColorRect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../ColorRect:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_hafda"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tpml5"]
+_data = {
+&"FadeOut": SubResource("Animation_05l2w"),
+&"RESET": SubResource("Animation_hafda")
+}
+
+[node name="Title_Screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 17.0
+offset_top = 18.0
+offset_right = -20.0
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_05l2w")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.021000002
+anchor_top = -0.024
+anchor_right = -0.021000002
+anchor_bottom = -0.024
+offset_left = 0.4149933
+offset_top = -0.18400002
+offset_right = 1167.415
+offset_bottom = 681.816
+texture = ExtResource("2_jqemp")
+
+[node name="LayoutBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.056
+anchor_right = 0.056
+offset_left = 380.56
+offset_top = 142.0
+offset_right = 934.56
+offset_bottom = 660.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+
+[node name="Start" type="Button" parent="LayoutBox"]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 1.08
+theme_override_fonts/font = ExtResource("3_05l2w")
+icon = ExtResource("4_013yr")
+flat = true
+icon_alignment = 1
+
+[node name="Settings" type="Button" parent="LayoutBox"]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 1.08
+theme_override_fonts/font = ExtResource("3_05l2w")
+text = "Settings"
+icon = ExtResource("4_013yr")
+flat = true
+icon_alignment = 1
+
+[node name="ColorRect2" type="ColorRect" parent="LayoutBox/Settings"]
+layout_mode = 0
+offset_left = 122.0
+offset_top = 65.0
+offset_right = 454.0
+offset_bottom = 121.0
+mouse_filter = 2
+color = Color(0.8745098, 0.35686275, 0.4, 1)
+
+[node name="Label" type="Label" parent="LayoutBox/Settings/ColorRect2"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 8.0
+offset_right = 350.0
+offset_bottom = 62.0
+theme_override_colors/font_color = Color(0.2784314, 0.16862746, 0.25490198, 1)
+theme_override_fonts/font = ExtResource("5_013yr")
+theme_override_font_sizes/font_size = 38
+text = "Settings"
+
+[node name="Quit" type="Button" parent="LayoutBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_05l2w")
+text = "
+"
+icon = ExtResource("5_8vmu4")
+flat = true
+icon_alignment = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(573, 310)
+scale = Vector2(2, 2)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Camera2D")
+libraries = {
+&"": SubResource("AnimationLibrary_tpml5")
+}
+metadata/start_hover = false
+metadata/start_normal = false
+
+[node name="Settings2" parent="." instance=ExtResource("9_8vmu4")]
+visible = false
+layout_mode = 1
+offset_left = 729.0
+offset_top = 142.0
+offset_right = -121.0
+offset_bottom = -116.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -22.0
+offset_top = -19.0
+offset_right = 1149.0
+offset_bottom = 657.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="title screen music" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(18, 4)
+stream = ExtResource("5_hafda")
+autoplay = true
+bus = &"Music"
+
+[node name="buttonClicked" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(23, -1)
+stream = ExtResource("6_tpml5")
+bus = &"SFX"
+
+[connection signal="pressed" from="LayoutBox/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="LayoutBox/Settings" to="Settings2" method="_on_settings_pressed"]
+[connection signal="pressed" from="LayoutBox/Quit" to="." method="_on_quit_pressed"]

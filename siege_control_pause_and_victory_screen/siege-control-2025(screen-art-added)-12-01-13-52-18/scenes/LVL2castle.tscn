@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://cosi5jgygl6vd"]
+
+[ext_resource type="Script" uid="uid://da1uoxtny8kl6" path="res://scripts/castle.gd" id="1_yodad"]
+[ext_resource type="Texture2D" uid="uid://bmngeoe7ekhiu" path="res://assets/Castle items/CastleLVL2piecel.PNG" id="2_136vi"]
+[ext_resource type="Texture2D" uid="uid://beqduh3mrotw0" path="res://assets/Castle items/BaseCastel.PNG" id="3_56ivm"]
+[ext_resource type="FontFile" uid="uid://c71meuy6p8gcb" path="res://assets/fonts/PixelOperator8.ttf" id="4_reamq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hwvuk"]
+size = Vector2(145.31247, 196.40622)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hwvuk"]
+bg_color = Color(0.2946382, 3.218744e-07, 8.4228816e-08, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3rlxh"]
+size = Vector2(198.7305, 254.88281)
+
+[node name="Castle" type="Node2D"]
+scale = Vector2(0.8, 0.8)
+script = ExtResource("1_yodad")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+scale = Vector2(0.8, 0.8)
+
+[node name="lvl2" type="Sprite2D" parent="StaticBody2D"]
+visibility_layer = 2
+position = Vector2(18.749994, -173.43748)
+scale = Vector2(0.87009805, 0.8839286)
+texture = ExtResource("2_136vi")
+
+[node name="LVL1" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(18.749992, -81.24999)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_56ivm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(18.750004, -131.48436)
+scale = Vector2(1.0000001, 1.0000001)
+shape = SubResource("RectangleShape2D_hwvuk")
+
+[node name="HealthBar" type="Node2D" parent="."]
+
+[node name="ProgressBar" type="ProgressBar" parent="HealthBar"]
+offset_left = -26.25
+offset_top = -135.0
+offset_right = 51.249992
+offset_bottom = -119.0
+theme_override_fonts/font = ExtResource("4_reamq")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/fill = SubResource("StyleBoxFlat_hwvuk")
+value = 100.0
+rounded = true
+fill_mode = 1
+
+[node name="Hurtbox" type="Area2D" parent="HealthBar"]
+scale = Vector2(0.9999998, 0.9999998)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HealthBar/Hurtbox"]
+position = Vector2(14.843755, -108.43754)
+scale = Vector2(0.64, 0.64)
+shape = SubResource("RectangleShape2D_3rlxh")

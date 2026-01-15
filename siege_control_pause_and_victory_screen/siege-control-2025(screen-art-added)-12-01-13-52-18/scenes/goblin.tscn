@@ -1,0 +1,355 @@
+[gd_scene load_steps=25 format=3 uid="uid://c7apx1rhhqlo4"]
+
+[ext_resource type="Texture2D" uid="uid://d3v83r4yvmx2k" path="res://assets/Monsters_Creatures_Fantasy/Goblin/Attack.png" id="1_4yait"]
+[ext_resource type="Texture2D" uid="uid://dicbb6pr7r7bb" path="res://assets/Monsters_Creatures_Fantasy/Goblin/Run.png" id="1_tjgje"]
+
+[sub_resource type="GDScript" id="GDScript_371uh"]
+script/source = "extends CharacterBody2D
+
+@export var SPEED: float = 60.0
+@export var JUMP_VELOCITY: float = -300.0
+@export var JUMP_MIN_WAIT: float = 2.5
+@export var JUMP_MAX_WAIT: float = 3.5
+@export var TOUCH_DAMAGE: int = 10
+@export var PAUSE_BEFORE_JUMP: float = 0.0
+@export var MAX_HP: int = 30
+
+@onready var area: Area2D = $DamageArea
+@onready var tick: Timer = $DamageTimer
+@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+@onready var hurt_box: Area2D = $hurt_box
+
+var gravity: float = ProjectSettings.get_setting(\"physics/2d/default_gravity\")
+var t_jump: float = 0.0
+var castle: Node = null
+var player_blocked: bool = false
+var pause_left: float = 0.0
+var waiting_for_takeoff: bool = false
+var hp: int = MAX_HP
+var dead: bool = false
+
+func _ready() -> void:
+	collision_layer = 0
+	collision_mask = 0
+	set_collision_layer_value(3, true)
+	set_collision_mask_value(1, true)
+	set_collision_mask_value(2, true)
+
+	area.collision_mask = 0
+	area.set_collision_mask_value(2, true)
+	area.set_collision_mask_value(4, true)
+	area.monitoring = true
+	area.monitorable = true
+
+	hurt_box.collision_layer = 0
+	hurt_box.collision_mask = 0
+	hurt_box.set_collision_layer_value(6, true) # player listens to this
+	hurt_box.monitoring = true
+	hurt_box.monitorable = true
+
+	if not area.is_connected(\"area_entered\", _on_area_enter):
+		area.area_entered.connect(_on_area_enter)
+	if not area.is_connected(\"area_exited\", _on_area_exit):
+		area.area_exited.connect(_on_area_exit)
+	if not area.body_entered.is_connected(_on_damage_area_body_entered):
+		area.body_entered.connect(_on_damage_area_body_entered)
+	if not area.body_exited.is_connected(_on_damage_area_body_exited):
+		area.body_exited.connect(_on_damage_area_body_exited)
+
+	if not tick.is_connected(\"timeout\", _on_tick):
+		tick.timeout.connect(_on_tick)
+	tick.wait_time = 2.0
+
+	add_to_group(\"Enemy\")
+	_reset_jump()
+
+func _physics_process(delta: float) -> void:
+	if dead: return
+	if not is_on_floor():
+		velocity.y += gravity * delta
+	if player_blocked:
+		velocity.x = 0.0
+		if pause_left > 0.0:
+			pause_left -= delta
+		else:
+			if is_on_floor() and not waiting_for_takeoff:
+				velocity.y = JUMP_VELOCITY
+				waiting_for_takeoff = true
+			if waiting_for_takeoff and not is_on_floor():
+				player_blocked = false
+				waiting_for_takeoff = false
+				_reset_jump()
+	else:
+		velocity.x = -SPEED
+		t_jump -= delta
+		if t_jump <= 0.0 and is_on_floor():
+			velocity.y = JUMP_VELOCITY
+			_reset_jump()
+	move_and_slide()
+
+func _reset_jump() -> void:
+	t_jump = randf_range(JUMP_MIN_WAIT, JUMP_MAX_WAIT)
+
+func _find_castle(n: Node) -> Node:
+	var cur: Node = n
+	while cur:
+		if cur.has_method(\"_take_damage\"):
+			return cur
+		cur = cur.get_parent()
+	return null
+
+func _start_castle_damage(c: Node) -> void:
+	castle = c
+	castle._take_damage(TOUCH_DAMAGE)
+	tick.start()
+
+func _stop_castle_damage() -> void:
+	castle = null
+	tick.stop()
+
+func _on_area_enter(a: Area2D) -> void:
+	if a.is_in_group(\"castle_hurtbox\"):
+		var c: Node = _find_castle(a)
+		if c: _start_castle_damage(c)
+
+func _on_area_exit(a: Area2D) -> void:
+	if a.is_in_group(\"castle_hurtbox\") and castle and _find_castle(a) == castle:
+		_stop_castle_damage()
+
+func _on_damage_area_body_entered(body: Node2D) -> void:
+	if body is CharacterBody2D and body.is_in_group(\"player\"):
+		player_blocked = true
+		pause_left = PAUSE_BEFORE_JUMP
+		waiting_for_takeoff = false
+	var c: Node2D = _find_castle(body)
+	if c: _start_castle_damage(c)
+	play_attack_animation()
+
+
+func _on_damage_area_body_exited(body: Node2D) -> void:
+	if body is CharacterBody2D and body.is_in_group(\"player\"):
+		player_blocked = false
+		waiting_for_takeoff = false
+		play_attack_animation()
+	if castle:
+		var c: Node = _find_castle(body)
+		if c == castle: _stop_castle_damage()
+
+func play_attack_animation() -> void:
+	if anim and anim.sprite_frames and anim.sprite_frames.has_animation(\"attack\"):
+		anim.play(\"attack\")
+
+
+func _on_tick() -> void:
+	if castle: castle._take_damage(TOUCH_DAMAGE)
+	else: tick.stop()
+
+func take_damage(amount: int) -> void:
+	if dead: return
+	hp -= amount
+	if hp <= 0: die()
+
+func die() -> void:
+	dead = true
+	tick.stop()
+	area.monitoring = false
+	hurt_box.monitoring = false
+	velocity = Vector2.ZERO
+	if anim and anim.sprite_frames and anim.sprite_frames.has_animation(\"death\"):
+		anim.play(\"death\")
+		anim.animation_finished.connect(func(): queue_free(), CONNECT_ONE_SHOT)
+	else:
+		queue_free()
+
+
+
+	
+
+
+	
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2t3q"]
+atlas = ExtResource("1_4yait")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_osho7"]
+atlas = ExtResource("1_4yait")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_exsy4"]
+atlas = ExtResource("1_4yait")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nadka"]
+atlas = ExtResource("1_4yait")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17tps"]
+atlas = ExtResource("1_4yait")
+region = Rect2(600, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y64qe"]
+atlas = ExtResource("1_4yait")
+region = Rect2(750, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0x8hd"]
+atlas = ExtResource("1_4yait")
+region = Rect2(900, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3wbsg"]
+atlas = ExtResource("1_4yait")
+region = Rect2(1050, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4yait"]
+atlas = ExtResource("1_tjgje")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3g0h"]
+atlas = ExtResource("1_tjgje")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76chb"]
+atlas = ExtResource("1_tjgje")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g1p1y"]
+atlas = ExtResource("1_tjgje")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lkl8q"]
+atlas = ExtResource("1_tjgje")
+region = Rect2(600, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yyaat"]
+atlas = ExtResource("1_tjgje")
+region = Rect2(750, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u21pb"]
+atlas = ExtResource("1_tjgje")
+region = Rect2(900, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vho8j"]
+atlas = ExtResource("1_tjgje")
+region = Rect2(1050, 0, 150, 150)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5gljc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2t3q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_osho7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_exsy4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nadka")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17tps")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y64qe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0x8hd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3wbsg")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4yait")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3g0h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_76chb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g1p1y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lkl8q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yyaat")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u21pb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vho8j")
+}],
+"loop": true,
+"name": &"run",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_371uh"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p2gj0"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n6pvg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pjw23"]
+radius = 8.0
+
+[node name="Goblin" type="CharacterBody2D"]
+collision_layer = 7
+collision_mask = 3
+script = SubResource("GDScript_371uh")
+TOUCH_DAMAGE = 5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1.1368684e-13, -17.000002)
+scale = Vector2(0.74666667, 0.5133333)
+sprite_frames = SubResource("SpriteFrames_5gljc")
+animation = &"attack"
+autoplay = "run"
+frame = 5
+frame_progress = 0.09082917
+flip_h = true
+
+[node name="DamageArea" type="Area2D" parent="."]
+position = Vector2(0, -7)
+collision_layer = 10
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+shape = SubResource("CircleShape2D_371uh")
+
+[node name="DamageTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_p2gj0")
+
+[node name="hurt_box" type="Area2D" parent="."]
+position = Vector2(0, -2)
+collision_layer = 64
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurt_box"]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_n6pvg")
+
+[node name="AttackArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_pjw23")
+
+[connection signal="body_entered" from="DamageArea" to="." method="_on_damage_area_body_entered"]
+[connection signal="body_exited" from="DamageArea" to="." method="_on_damage_area_body_exited"]

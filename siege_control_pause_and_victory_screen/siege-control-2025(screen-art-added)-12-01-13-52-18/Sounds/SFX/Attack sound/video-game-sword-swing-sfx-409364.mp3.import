@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b3ie6d7424kmn"
+path="res://.godot/imported/video-game-sword-swing-sfx-409364.mp3-5982bcb8b4b3c2329fe5f7b11c43cae9.mp3str"
+
+[deps]
+
+source_file="res://Sounds/SFX/Attack sound/video-game-sword-swing-sfx-409364.mp3"
+dest_files=["res://.godot/imported/video-game-sword-swing-sfx-409364.mp3-5982bcb8b4b3c2329fe5f7b11c43cae9.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

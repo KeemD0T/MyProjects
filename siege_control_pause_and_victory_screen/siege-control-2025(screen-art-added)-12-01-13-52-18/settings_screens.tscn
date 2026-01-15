@@ -1,0 +1,123 @@
+[gd_scene load_steps=5 format=3 uid="uid://h4q5d8trwurk"]
+
+[ext_resource type="Script" uid="uid://dgu7u1dxu6h38" path="res://settings_screens.gd" id="1_gv322"]
+[ext_resource type="Texture2D" uid="uid://tsm21cthtr0v" path="res://assets/TitleScreenbackground.png" id="2_o2deo"]
+[ext_resource type="FontFile" uid="uid://d1r7kik1pjse2" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="3_fl3xf"]
+[ext_resource type="FontFile" uid="uid://c71meuy6p8gcb" path="res://assets/fonts/PixelOperator8.ttf" id="4_w8an0"]
+
+[node name="settings_screens" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gv322")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -3.0
+offset_top = -14.0
+offset_right = 1146.0
+offset_bottom = 656.0
+texture = ExtResource("2_o2deo")
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1145.0
+offset_bottom = 315.0
+color = Color(0.52156866, 0.52156866, 0.52156866, 1)
+
+[node name="TitleText" type="Label" parent="."]
+layout_mode = 0
+offset_top = 58.0
+offset_right = 1150.0
+offset_bottom = 304.0
+theme_override_colors/font_color = Color(0.87370825, 0.7764323, 1.1551381e-06, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_fl3xf")
+theme_override_font_sizes/font_size = 64
+text = "Settings
+
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LayoutBox" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 284.0
+offset_top = 307.0
+offset_right = 687.3334
+offset_bottom = 443.0
+scale = Vector2(1.5, 1.5)
+
+[node name="Move Left" type="Button" parent="LayoutBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_w8an0")
+text = "Move Left"
+
+[node name="Move Right" type="Button" parent="LayoutBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_w8an0")
+text = "Move Right"
+
+[node name="Jump" type="Button" parent="LayoutBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_w8an0")
+text = "Jump"
+
+[node name="Attack" type="Button" parent="LayoutBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_w8an0")
+text = "Attack"
+
+[node name="Back" type="Button" parent="LayoutBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_w8an0")
+text = "Back"
+
+[node name="MusicSlider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 482.0
+offset_top = 220.0
+offset_right = 490.0
+offset_bottom = 236.0
+scale = Vector2(12.464968, 1.0881307)
+
+[node name="Label" type="Label" parent="MusicSlider"]
+layout_mode = 0
+offset_left = -15.804291
+offset_top = -3.6760287
+offset_right = 24.19571
+offset_bottom = 19.32397
+scale = Vector2(0.3224932, 1.4594203)
+theme_override_colors/font_color = Color(0.8745098, 0.7764706, 0, 1)
+theme_override_fonts/font = ExtResource("3_fl3xf")
+theme_override_font_sizes/font_size = 8
+text = "Music:"
+
+[node name="SFXSlider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 480.00003
+offset_top = 261.0
+offset_right = 488.00003
+offset_bottom = 277.0
+scale = Vector2(12.993693, 1.0180387)
+
+[node name="Label2" type="Label" parent="SFXSlider"]
+layout_mode = 0
+offset_left = -10.697502
+offset_top = 0.98228407
+offset_right = 29.302498
+offset_bottom = 23.982285
+scale = Vector2(0.3224932, 1.4594203)
+theme_override_colors/font_color = Color(0.8745098, 0.7764706, 0, 1)
+theme_override_fonts/font = ExtResource("3_fl3xf")
+theme_override_font_sizes/font_size = 8
+text = "SFX:"
+
+[connection signal="pressed" from="LayoutBox/Move Left" to="." method="_on_move_left_pressed"]
+[connection signal="pressed" from="LayoutBox/Move Right" to="." method="_on_move_right_pressed"]
+[connection signal="pressed" from="LayoutBox/Jump" to="." method="_on_jump_pressed"]
+[connection signal="pressed" from="LayoutBox/Attack" to="." method="_on_attack_pressed"]
+[connection signal="pressed" from="LayoutBox/Back" to="." method="_on_back_pressed"]

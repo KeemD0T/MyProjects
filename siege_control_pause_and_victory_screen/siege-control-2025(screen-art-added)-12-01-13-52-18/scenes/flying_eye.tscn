@@ -1,0 +1,554 @@
+[gd_scene load_steps=43 format=3 uid="uid://d2smdsee54tl6"]
+
+[ext_resource type="Texture2D" uid="uid://kxujsarex7a3" path="res://assets/Monsters_Creatures_Fantasy/Flying eye/Attack.png" id="1_nqmoj"]
+[ext_resource type="Texture2D" uid="uid://cixtthsi7bi37" path="res://assets/Monsters_Creatures_Fantasy/Flying eye/Flight.png" id="2_86xds"]
+[ext_resource type="Texture2D" uid="uid://dogxg7isxokrc" path="res://assets/Monsters_Creatures_Fantasy/Flying eye/Death.png" id="3_86xds"]
+[ext_resource type="Texture2D" uid="uid://53c1mtsynf8y" path="res://assets/Monsters_Creatures_Fantasy/Flying eye/Take Hit.png" id="4_xx8ek"]
+
+[sub_resource type="GDScript" id="GDScript_371uh"]
+script/source = "extends CharacterBody2D
+
+@export var SPEED: float = 80.0
+@export var HOVER_AMPLITUDE: float = 10.0
+@export var HOVER_SPEED: float = 2.0
+@export var TOUCH_DAMAGE: int = 30
+@export var MAX_HP: int = 10
+@export var EXPLOSION_RADIUS: float = 20.0
+@export var EXPLOSION_LIFETIME: float = 0.7
+@export var DEATH_LIFETIME: float = 2.1
+@export var FLY_HEIGHT_OFFSET: float = -62.0
+
+@onready var area: Area2D = $DamageArea
+@onready var tick: Timer = $DamageTimer
+@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+@onready var hurt_box: Area2D = $hurt_box
+@onready var body_shape: CollisionShape2D = $CollisionShape2D
+
+var castle: Node = null
+var castle_hurtbox: Node2D = null
+
+var hp: int = MAX_HP
+var dead: bool = false
+var falling: bool = false
+var gravity: float = ProjectSettings.get_setting(\"physics/2d/default_gravity\")
+
+
+func _ready() -> void:
+	collision_layer = 0
+	collision_mask = 0
+	set_collision_layer_value(3, true)
+
+	area.collision_mask = 0
+	area.set_collision_mask_value(2, true)
+	area.set_collision_mask_value(4, true)
+	area.monitoring = true
+	area.monitorable = true
+
+	hurt_box.collision_layer = 0
+	hurt_box.collision_mask = 0
+	hurt_box.set_collision_layer_value(6, true)
+	hurt_box.monitoring = true
+	hurt_box.monitorable = true
+
+	if not area.is_connected(\"area_entered\", _on_area_enter):
+		area.area_entered.connect(_on_area_enter)
+	if not area.is_connected(\"area_exited\", _on_area_exit):
+		area.area_exited.connect(_on_area_exit)
+	if not area.is_connected(\"body_entered\", _on_body_enter):
+		area.body_entered.connect(_on_body_enter)
+	if not area.is_connected(\"body_exited\", _on_body_exit):
+		area.body_exited.connect(_on_body_exit)
+
+	if not tick.is_connected(\"timeout\", _on_tick):
+		tick.timeout.connect(_on_tick)
+	tick.wait_time = 2.0
+
+	add_to_group(\"Enemy\")
+
+	var list = get_tree().get_nodes_in_group(\"castle_hurtbox\")
+	if list.size() > 0:
+		castle_hurtbox = list[0] as Node2D
+		castle = _find_castle(castle_hurtbox)
+
+
+func _physics_process(delta: float) -> void:
+	if dead and falling:
+		velocity.y += gravity * delta
+		move_and_slide()
+
+		if is_on_floor():
+			falling = false
+			velocity = Vector2.ZERO
+
+			# once on floor, completely remove body collisions so player won't get stuck
+			collision_layer = 0
+			collision_mask = 0
+			if body_shape:
+				body_shape.set_deferred(\"disabled\", true)
+
+			if anim and anim.sprite_frames.has_animation(\"death\") and anim.animation != \"death\":
+				anim.play(\"death\")
+		return
+	elif dead:
+		return
+
+	if castle_hurtbox and castle_hurtbox.is_inside_tree():
+		var target_pos: Vector2 = castle_hurtbox.global_position
+		target_pos.y += FLY_HEIGHT_OFFSET
+		target_pos.y += sin(Time.get_ticks_msec() / 1000.0 * HOVER_SPEED) * HOVER_AMPLITUDE
+
+		var to_target: Vector2 = target_pos - global_position
+		var dist := to_target.length()
+
+		if dist <= EXPLOSION_RADIUS:
+			_start_castle_damage(castle if castle != null else _find_castle(castle_hurtbox))
+		else:
+			velocity = to_target.normalized() * SPEED
+	else:
+		velocity = Vector2(-SPEED, 0.0)
+
+	if anim:
+		if anim.sprite_frames.has_animation(\"fly\") and anim.animation != \"fly\":
+			anim.play(\"fly\")
+
+		if velocity.x < 0:
+			anim.flip_h = true
+		else:
+			anim.flip_h = false
+
+	move_and_slide()
+
+
+func _find_castle(n: Node) -> Node:
+	var cur: Node = n
+	while cur:
+		if cur.has_method(\"_take_damage\"):
+			return cur
+		cur = cur.get_parent()
+	return null
+
+
+func _start_castle_damage(c: Node) -> void:
+	if dead:
+		return
+	if c == null:
+		return
+
+	castle = c
+
+	if castle.has_method(\"_take_damage\"):
+		castle._take_damage(TOUCH_DAMAGE)
+
+	_explode_castle()
+
+
+func _stop_castle_damage() -> void:
+	castle = null
+	tick.stop()
+
+
+func _on_area_enter(a: Area2D) -> void:
+	if dead:
+		return
+	if a.is_in_group(\"castle_hurtbox\"):
+		var c: Node = _find_castle(a)
+		if c:
+			_start_castle_damage(c)
+
+
+func _on_area_exit(a: Area2D) -> void:
+	if dead:
+		return
+	if a.is_in_group(\"castle_hurtbox\") and castle and _find_castle(a) == castle:
+		_stop_castle_damage()
+
+
+func _on_body_enter(b: Node) -> void:
+	if dead:
+		return
+	var c: Node = _find_castle(b)
+	if c:
+		_start_castle_damage(c)
+
+
+func _on_body_exit(b: Node) -> void:
+	if dead:
+		return
+	if castle:
+		var c: Node = _find_castle(b)
+		if c == castle:
+			_stop_castle_damage()
+
+
+func _on_tick() -> void:
+	tick.stop()
+
+
+func take_damage(amount: int) -> void:
+	if dead:
+		return
+	hp -= amount
+	if hp <= 0:
+		die()
+
+
+func die() -> void:
+	if dead:
+		return
+	dead = true
+	falling = true
+	tick.stop()
+	area.monitoring = false
+	hurt_box.monitoring = false
+
+	# only need to see ground while falling
+	collision_mask = 0
+	set_collision_mask_value(1, true)
+
+	if anim and anim.sprite_frames.has_animation(\"death\"):
+		anim.play(\"death\")
+
+	var t := get_tree().create_timer(DEATH_LIFETIME)
+	t.timeout.connect(func() -> void:
+		queue_free()
+	, CONNECT_ONE_SHOT)
+
+
+func _explode_castle() -> void:
+	if dead:
+		return
+	dead = true
+	falling = false
+	tick.stop()
+	hurt_box.monitoring = false
+	velocity = Vector2.ZERO
+
+	if anim and anim.sprite_frames:
+		var name := \"\"
+		if anim.sprite_frames.has_animation(\"explode\"):
+			name = \"explode\"
+		elif anim.sprite_frames.has_animation(\"death\"):
+			name = \"death\"
+
+		if name != \"\":
+			anim.play(name)
+			var t := get_tree().create_timer(EXPLOSION_LIFETIME)
+			t.timeout.connect(func() -> void:
+				queue_free()
+			, CONNECT_ONE_SHOT)
+			return
+
+	queue_free()
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xx8ek"]
+atlas = ExtResource("1_nqmoj")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_npg2i"]
+atlas = ExtResource("1_nqmoj")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2hqny"]
+atlas = ExtResource("1_nqmoj")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kd1ne"]
+atlas = ExtResource("1_nqmoj")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yd4cp"]
+atlas = ExtResource("1_nqmoj")
+region = Rect2(600, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spbic"]
+atlas = ExtResource("1_nqmoj")
+region = Rect2(750, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u23hd"]
+atlas = ExtResource("1_nqmoj")
+region = Rect2(900, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgott"]
+atlas = ExtResource("1_nqmoj")
+region = Rect2(1050, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c6ik2"]
+atlas = ExtResource("2_86xds")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ofxt"]
+atlas = ExtResource("2_86xds")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o706q"]
+atlas = ExtResource("2_86xds")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdr37"]
+atlas = ExtResource("2_86xds")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fuk2g"]
+atlas = ExtResource("2_86xds")
+region = Rect2(600, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oouni"]
+atlas = ExtResource("2_86xds")
+region = Rect2(750, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_04wpx"]
+atlas = ExtResource("2_86xds")
+region = Rect2(900, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48tvi"]
+atlas = ExtResource("2_86xds")
+region = Rect2(1050, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fq3yg"]
+atlas = ExtResource("3_86xds")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mk6q1"]
+atlas = ExtResource("3_86xds")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q00h7"]
+atlas = ExtResource("3_86xds")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eeepw"]
+atlas = ExtResource("3_86xds")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4y5w"]
+atlas = ExtResource("4_xx8ek")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r24jl"]
+atlas = ExtResource("4_xx8ek")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_una28"]
+atlas = ExtResource("4_xx8ek")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qb80u"]
+atlas = ExtResource("4_xx8ek")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nqmoj"]
+atlas = ExtResource("2_86xds")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86xds"]
+atlas = ExtResource("2_86xds")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vtb0"]
+atlas = ExtResource("2_86xds")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jwkjl"]
+atlas = ExtResource("2_86xds")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hl48s"]
+atlas = ExtResource("2_86xds")
+region = Rect2(600, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xglqv"]
+atlas = ExtResource("2_86xds")
+region = Rect2(750, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1aih6"]
+atlas = ExtResource("2_86xds")
+region = Rect2(900, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tn01v"]
+atlas = ExtResource("2_86xds")
+region = Rect2(1050, 0, 150, 150)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5gljc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xx8ek")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_npg2i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2hqny")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kd1ne")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yd4cp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spbic")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u23hd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jgott")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c6ik2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ofxt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o706q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdr37")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fuk2g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oouni")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_04wpx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_48tvi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fq3yg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mk6q1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q00h7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eeepw")
+}],
+"loop": false,
+"name": &"death",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w4y5w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r24jl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_una28")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qb80u")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nqmoj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86xds")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vtb0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jwkjl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hl48s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xglqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1aih6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tn01v")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_371uh"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p2gj0"]
+radius = 2.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n6pvg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pjw23"]
+radius = 3.0
+
+[node name="flying_eye" type="CharacterBody2D"]
+collision_layer = 128
+collision_mask = 0
+script = SubResource("GDScript_371uh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(2, -15)
+scale = Vector2(0.4733333, 0.5466666)
+sprite_frames = SubResource("SpriteFrames_5gljc")
+animation = &"explode"
+autoplay = "fly"
+frame = 3
+frame_progress = 1.0
+offset = Vector2(0, 50)
+flip_h = true
+
+[node name="DamageArea" type="Area2D" parent="."]
+visible = false
+position = Vector2(0, -7)
+collision_layer = 10
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+shape = SubResource("CircleShape2D_371uh")
+
+[node name="DamageTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 13)
+shape = SubResource("CircleShape2D_p2gj0")
+
+[node name="hurt_box" type="Area2D" parent="."]
+position = Vector2(0, -2)
+collision_layer = 64
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurt_box"]
+position = Vector2(2, 14)
+shape = SubResource("CircleShape2D_n6pvg")
+
+[node name="AttackArea" type="Area2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(2, 13)
+shape = SubResource("CircleShape2D_pjw23")
+
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="DamageArea" to="." method="_on_damage_area_body_entered"]
+[connection signal="body_exited" from="DamageArea" to="." method="_on_damage_area_body_exited"]

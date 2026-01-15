@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=3 uid="uid://qscxlno0fsdn"]
+
+[ext_resource type="Texture2D" uid="uid://beqduh3mrotw0" path="res://assets/BaseCastel.PNG" id="1_3rlxh"]
+[ext_resource type="Script" uid="uid://da1uoxtny8kl6" path="res://scenes/castle.gd" id="1_hwvuk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hwvuk"]
+size = Vector2(143.74997, 116.250015)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hwvuk"]
+bg_color = Color(0.2946382, 3.218744e-07, 8.4228816e-08, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3rlxh"]
+size = Vector2(187.5, 144.53122)
+
+[node name="Castle" type="Node2D"]
+scale = Vector2(0.8, 0.8)
+script = ExtResource("1_hwvuk")
+max_health = null
+warn_threshold = null
+danger_threshold = null
+bar_anim_time = null
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+scale = Vector2(0.8, 0.8)
+
+[node name="LVL1" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(18.749992, -81.24999)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_3rlxh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(17.187504, -92.500015)
+scale = Vector2(1.0000001, 1.0000001)
+shape = SubResource("RectangleShape2D_hwvuk")
+
+[node name="HealthBar" type="Node2D" parent="."]
+
+[node name="ProgressBar" type="ProgressBar" parent="HealthBar"]
+offset_left = -26.25
+offset_top = -135.0
+offset_right = 51.249992
+offset_bottom = -119.0
+theme_override_font_sizes/font_size = 8
+theme_override_styles/fill = SubResource("StyleBoxFlat_hwvuk")
+value = 100.0
+rounded = true
+fill_mode = 1
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(13.750002, -73.75002)
+scale = Vector2(0.64, 0.64)
+shape = SubResource("RectangleShape2D_3rlxh")
