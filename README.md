@@ -48,54 +48,18 @@ Our main design goal was to make the player *feel* the progression of the game �
 Godot’s node-based system was used to build the game in a modular way. Each major system is broken into smaller, manageable parts, such as:
 
 - **Player System:** Movement, sprite rendering, collision detection, and position tracking  
-- **Enemy System:** AI behavior, movement, collision, and attack timing  
+- **Enemy System:** movement, collision, and attack timing  
 - **UI System:** Buttons, screen transitions, camera handling, and game states (pause, victory, settings)  
 
 This structure helped keep the project organized and made debugging and feature development easier.
 
 ---
 
-## Team Workflow
-
-Our team divided work based on individual strengths and collaborated on major systems like enemy waves, UI, and game mechanics. We used GitHub for version control and Discord for communication and coordination.
-
-### Team Roles
-
-- **Mohammad — Team Lead**  
-  GitHub management, enemy design, attack systems, knight animations, and final boss features.
-
-- **Roupen — Tech Lead**  
-  Core systems, enemy AI, health systems, wave logic, HUD, boss mechanics, and testing.
-
-- **Hakeem — Art Lead** *(Me)*  
-  Castle and environment art, UI screens, animations, sound polish, final wave visuals, and final boss scene design.
-
-- **Sam — Systems Developer**  
-  Shop system, coins, boundaries, pause menu, settings UI, background systems, and victory screen fixes.
-
----
-
-## Challenges & Solutions
-
-### Challenges
-- Learning how to implement new mechanics in Godot  
-- Debugging complex systems like enemy waves and UI states  
-- Managing file size limits during collaboration  
-
-### How We Solved Them
-- Switched to GitHub for better version control and file management  
-- Watched tutorials to learn Godot features and improve our workflow  
-- Used Discord to communicate quickly and debug issues together as a team  
-
----
 
 ## My Contributions
 
 I played a major role in both the **visual and collaborative side** of the project. I helped shape the early game concept during brainstorming, designed the castle and environment art, created UI screens and animations, and polished sound and visual feedback.  
 
-I also set up and organized our Discord server, which became our main space for communication, updates, and problem-solving throughout development.
-
----
 
 ## How to Run
 
