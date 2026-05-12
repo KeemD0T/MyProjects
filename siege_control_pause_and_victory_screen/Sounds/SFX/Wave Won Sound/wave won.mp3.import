@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cgrxwurjfogt2"
+path="res://.godot/imported/wave won.mp3-e961e2127c19ee1b79e7b126e12fd8e5.mp3str"
+
+[deps]
+
+source_file="res://Sounds/SFX/Wave Won Sound/wave won.mp3"
+dest_files=["res://.godot/imported/wave won.mp3-e961e2127c19ee1b79e7b126e12fd8e5.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

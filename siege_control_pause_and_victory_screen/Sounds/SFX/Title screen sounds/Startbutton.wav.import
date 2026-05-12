@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bmhnjtx3ll6l8"
+path="res://.godot/imported/Startbutton.wav-cc7a52c48d93120257515577d02e8b8b.sample"
+
+[deps]
+
+source_file="res://Sounds/SFX/Title screen sounds/Startbutton.wav"
+dest_files=["res://.godot/imported/Startbutton.wav-cc7a52c48d93120257515577d02e8b8b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

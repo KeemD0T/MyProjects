@@ -1,0 +1,192 @@
+[gd_scene load_steps=9 format=3 uid="uid://dx6i2xgyd6ri3"]
+
+[ext_resource type="Texture2D" uid="uid://cgf2f4t8upqfo" path="res://assets/Shop Art/Shop_Art_1.PNG" id="1_atuvt"]
+[ext_resource type="Script" uid="uid://c1u7qhswjb13c" path="res://scripts/store.gd" id="1_gf6f2"]
+[ext_resource type="FontFile" uid="uid://d1r7kik1pjse2" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="3_gf6f2"]
+[ext_resource type="FontFile" uid="uid://c71meuy6p8gcb" path="res://assets/fonts/PixelOperator8.ttf" id="3_vb4ln"]
+[ext_resource type="Texture2D" uid="uid://bc0fpjpk08o4b" path="res://assets/Shop Art/No_shop_Button.PNG" id="4_5bups"]
+[ext_resource type="Texture2D" uid="uid://bfrahak4dguy8" path="res://assets/Shop Art/Okay_Shop_Button.PNG" id="4_tmp5q"]
+[ext_resource type="Texture2D" uid="uid://cakicbos6sjp0" path="res://assets/Shop Art/Shop_Bar3.PNG" id="5_tmp5q"]
+[ext_resource type="Texture2D" uid="uid://b70m8004xrupr" path="res://assets/Shop Art/Shop_Bar.PNG" id="6_phafb"]
+
+[node name="Store" type="Control"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -253.99998
+offset_top = -142.99998
+offset_right = -1170.0
+offset_bottom = -647.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2.2197688, 1.8766134)
+script = ExtResource("1_gf6f2")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.028
+offset_right = 2.0
+offset_bottom = -0.03199768
+texture = ExtResource("1_atuvt")
+stretch_mode = 2
+
+[node name="ShopBar2" type="Sprite2D" parent="."]
+position = Vector2(129, 27.000004)
+scale = Vector2(1.7346939, 1.1)
+texture = ExtResource("6_phafb")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 51.0
+offset_top = 21.0
+offset_right = 202.0
+offset_bottom = 29.0
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("3_gf6f2")
+theme_override_font_sizes/font_size = 8
+text = "Welcome to the Store!"
+
+[node name="PriceBackground" type="Sprite2D" parent="."]
+position = Vector2(43.18829, 60.45261)
+scale = Vector2(0.53445494, 0.7301739)
+texture = ExtResource("6_phafb")
+
+[node name="PriceBackground2" type="Sprite2D" parent="."]
+position = Vector2(42.875793, 93.73817)
+scale = Vector2(0.54083246, 0.7492109)
+texture = ExtResource("6_phafb")
+
+[node name="PriceBackground3" type="Sprite2D" parent="."]
+position = Vector2(43.101044, 126.990845)
+scale = Vector2(0.5454295, 0.6993897)
+texture = ExtResource("6_phafb")
+
+[node name="LabelBackground" type="Sprite2D" parent="."]
+position = Vector2(170.25, 56.999996)
+scale = Vector2(0.70890415, 0.71428573)
+texture = ExtResource("5_tmp5q")
+
+[node name="LabelBackground2" type="Sprite2D" parent="."]
+position = Vector2(170.75, 90)
+scale = Vector2(0.7157535, 0.71428573)
+texture = ExtResource("5_tmp5q")
+
+[node name="LabelBackground3" type="Sprite2D" parent="."]
+position = Vector2(170.25, 125)
+scale = Vector2(0.70890415, 0.71428573)
+texture = ExtResource("5_tmp5q")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 29.0
+offset_top = -26.0
+offset_right = -26.5
+offset_bottom = 69.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Price Container" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="Price1" type="Label" parent="HBoxContainer/Price Container"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.76838136, 0.76304054, 0.14556879, 1)
+theme_override_fonts/font = ExtResource("3_vb4ln")
+theme_override_font_sizes/font_size = 8
+text = "3 Coins
+
+"
+
+[node name="Price2" type="Label" parent="HBoxContainer/Price Container"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.76862746, 0.7647059, 0.14509805, 1)
+theme_override_fonts/font = ExtResource("3_vb4ln")
+theme_override_font_sizes/font_size = 8
+text = "3 Coins
+
+"
+
+[node name="Price3" type="Label" parent="HBoxContainer/Price Container"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.76862746, 0.7647059, 0.14509805, 1)
+theme_override_fonts/font = ExtResource("3_vb4ln")
+theme_override_font_sizes/font_size = 8
+text = "3 Coins"
+
+[node name="Button Container" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Buy Button1" type="TextureButton" parent="HBoxContainer/Button Container"]
+layout_mode = 2
+texture_normal = ExtResource("4_tmp5q")
+
+[node name="Buy Button2" type="TextureButton" parent="HBoxContainer/Button Container"]
+layout_mode = 2
+texture_normal = ExtResource("4_tmp5q")
+
+[node name="Buy Button3" type="TextureButton" parent="HBoxContainer/Button Container"]
+layout_mode = 2
+texture_normal = ExtResource("4_tmp5q")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Spacing" type="Label" parent="HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "   "
+
+[node name="Label Container" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="HBoxContainer/Label Container"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8182378, 0.13675654, 0.24630818, 1)
+theme_override_fonts/font = ExtResource("3_gf6f2")
+theme_override_font_sizes/font_size = 8
+text = "Castle Health
+
+"
+
+[node name="Label2" type="Label" parent="HBoxContainer/Label Container"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.71964145, 0.33870637, 0.3555132, 1)
+theme_override_fonts/font = ExtResource("3_gf6f2")
+theme_override_font_sizes/font_size = 8
+text = "Health Regen
+
+"
+
+[node name="Label3" type="Label" parent="HBoxContainer/Label Container"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.24509057, 0.4153568, 0.522836, 1)
+theme_override_fonts/font = ExtResource("3_gf6f2")
+theme_override_font_sizes/font_size = 8
+text = "DMG Upgrade"
+
+[node name="CloseButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 48.0
+offset_bottom = 49.0
+texture_normal = ExtResource("4_5bups")
+
+[connection signal="pressed" from="HBoxContainer/Button Container/Buy Button1" to="." method="_on_buy_button_1_pressed"]
+[connection signal="pressed" from="HBoxContainer/Button Container/Buy Button2" to="." method="_on_buy_button_2_pressed"]
+[connection signal="pressed" from="HBoxContainer/Button Container/Buy Button3" to="." method="_on_buy_button_3_pressed"]
+[connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]

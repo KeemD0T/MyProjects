@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cio7s4x2ax4xw"
+path="res://.godot/imported/shouting_2_ian.wav-253181c5dbbf77a457d68c4fc39f0445.sample"
+
+[deps]
+
+source_file="res://assets/Super Dialogue Audio Pack v1/Step 2 - Audio Files/10 - Shouting/Male/Ian Lampert/shouting_2_ian.wav"
+dest_files=["res://.godot/imported/shouting_2_ian.wav-253181c5dbbf77a457d68c4fc39f0445.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

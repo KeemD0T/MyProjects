@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cvvocyi6qivlk"
+path="res://.godot/imported/4. Ballad of Ashenwood.ogg-ed96fc825cdf5532267b7a73546ee083.oggvorbisstr"
+
+[deps]
+
+source_file="res://Sounds/SFX/Title screen sounds/4. Ballad of Ashenwood.ogg"
+dest_files=["res://.godot/imported/4. Ballad of Ashenwood.ogg-ed96fc825cdf5532267b7a73546ee083.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

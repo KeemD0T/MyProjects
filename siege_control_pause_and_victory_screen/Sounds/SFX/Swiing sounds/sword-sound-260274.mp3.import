@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://r1l1c75h7416"
+path="res://.godot/imported/sword-sound-260274.mp3-3260b97b76d0821928ac8cee4a39e208.mp3str"
+
+[deps]
+
+source_file="res://Sounds/SFX/Swiing sounds/sword-sound-260274.mp3"
+dest_files=["res://.godot/imported/sword-sound-260274.mp3-3260b97b76d0821928ac8cee4a39e208.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,383 @@
+[gd_scene load_steps=22 format=3 uid="uid://dhl7jmkvko71c"]
+
+[ext_resource type="PackedScene" uid="uid://d3lrhikt6x65w" path="res://scenes/player.tscn" id="1_80nbo"]
+[ext_resource type="Script" uid="uid://bcb720sixtym" path="res://scripts/game_manager.gd" id="1_j5wjh"]
+[ext_resource type="Texture2D" uid="uid://cphsftspdovnm" path="res://assets/sprites/world_tileset.png" id="2_e2o6t"]
+[ext_resource type="Texture2D" uid="uid://bwh7ltij04a3l" path="res://assets/download (3).png" id="2_eow3j"]
+[ext_resource type="PackedScene" uid="uid://brai4hr4nllmm" path="res://scenes/death_screen.tscn" id="2_iotsf"]
+[ext_resource type="PackedScene" uid="uid://qscxlno0fsdn" path="res://scenes/Castle.tscn" id="3_feb5d"]
+[ext_resource type="Texture2D" uid="uid://cl46f20ysqiyi" path="res://assets/pixelated_Floor.png" id="4_j5wjh"]
+[ext_resource type="Texture2D" uid="uid://crj5i1gem1ntf" path="res://assets/Plants/cacti-pixel-removebg-preview.png" id="4_vef74"]
+[ext_resource type="PackedScene" uid="uid://c2abfnqx6dlpb" path="res://scenes/slime.tscn" id="5_7jktm"]
+[ext_resource type="Texture2D" uid="uid://dmbmkts1es00i" path="res://assets/Plants/cacti-pixel3 (1).PNG" id="5_mfdv2"]
+[ext_resource type="Texture2D" uid="uid://ebu2gu5d3v33" path="res://assets/Plants/cacti-pixel2 (1).PNG" id="6_iotsf"]
+[ext_resource type="PackedScene" uid="uid://p4sdp0ysh5u1" path="res://scenes/coin.tscn" id="7_j5wjh"]
+[ext_resource type="Script" uid="uid://cpobamvsvjxo6" path="res://camera_2d.gd" id="13_7sc4i"]
+[ext_resource type="FontFile" uid="uid://c71meuy6p8gcb" path="res://assets/fonts/PixelOperator8.ttf" id="13_lc2xo"]
+[ext_resource type="Script" uid="uid://126oov18dj3u" path="res://coin_label.gd" id="14_215e1"]
+[ext_resource type="Script" uid="uid://c0hwss431cfxl" path="res://hud.gd" id="16_80cx4"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_e2o6t"]
+normal = Vector2(1, 0)
+distance = -239.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_j5wjh"]
+normal = Vector2(-1, 0)
+distance = -242.99722
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_feb5d"]
+texture = ExtResource("2_e2o6t")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:2/0 = 0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:2/0 = 0
+5:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:3/0 = 0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+2:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+3:4/0 = 0
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:4/0 = 0
+4:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+4:8/0 = 0
+0:9/0 = 0
+1:9/0 = 0
+2:9/0 = 0
+3:9/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+2:10/0 = 0
+3:10/0 = 0
+0:11/0 = 0
+1:11/0 = 0
+2:11/0 = 0
+0:12/0 = 0
+1:12/0 = 0
+2:12/0 = 0
+0:13/0 = 0
+1:13/0 = 0
+2:13/0 = 0
+0:14/0 = 0
+1:14/0 = 0
+2:14/0 = 0
+0:15/0 = 0
+1:15/0 = 0
+8:0/0 = 0
+8:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+8:1/0 = 0
+8:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:0/0 = 0
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -8, 7.5, -8, 7.5, 8, -7.5, 8)
+6:1/0 = 0
+6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:2/0 = 0
+6:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:2/0 = 0
+7:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:2/0 = 0
+8:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:15/0 = 0
+3:14/0 = 0
+3:13/0 = 0
+3:12/0 = 0
+3:11/0 = 0
+6:10/0 = 0
+6:9/0 = 0
+5:9/0 = 0
+4:9/0 = 0
+4:10/0 = 0
+7:9/0 = 0
+7:7/0 = 0
+8:7/0 = 0
+7:3/0 = 0
+7:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:4/0 = 0
+7:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:4/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+9:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5.935338, -3.2374563, 5.5756207, -3.4173155, 6.115196, 8, -5.935339, 8)
+9:4/0 = 0
+9:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5.935338, -3.2374563, 5.5756207, -3.4173155, 6.115196, 8, -5.935339, 8)
+5:3/0 = 0
+6:3/0 = 0
+6:4/0 = 0
+5:4/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+7:6/0 = 0
+8:6/0 = 0
+9:6/0 = 0
+9:7/0 = 0
+6:7/0 = 0
+6:8/0 = 0
+5:8/0 = 0
+5:7/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+8:5/0 = 0
+8:8/0 = 0
+7:8/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+11:2/0 = 0
+4:13/0 = 0
+4:14/0 = 0
+5:13/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_fc0e3"]
+tile_size = Vector2i(15, 16)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_feb5d")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hve3p"]
+size = Vector2(626.0831, 132.54439)
+
+[node name="Game" type="Node2D"]
+
+[node name="GameManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_j5wjh")
+enemy_scene = ExtResource("5_7jktm")
+
+[node name="DeathScreen" parent="GameManager" instance=ExtResource("2_iotsf")]
+
+[node name="BreakTimer" type="Timer" parent="GameManager"]
+one_shot = true
+
+[node name="SpawnTimer" type="Timer" parent="GameManager"]
+wait_time = 7.0
+
+[node name="SpawnPoints" type="Node2D" parent="GameManager"]
+
+[node name="Marker2D" type="Marker2D" parent="GameManager/SpawnPoints"]
+position = Vector2(352, 68)
+
+[node name="Marker2D2" type="Marker2D" parent="GameManager/SpawnPoints"]
+position = Vector2(405, 72)
+
+[node name="Marker2D3" type="Marker2D" parent="GameManager/SpawnPoints"]
+position = Vector2(314, 71)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+position = Vector2(-12, 2)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="TileMapLayer"]
+position = Vector2(14, -4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer/StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_e2o6t")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="TileMapLayer/StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_j5wjh")
+
+[node name="Game Layer" type="TileMapLayer" parent="TileMapLayer"]
+use_parent_material = true
+tile_map_data = PackedByteArray(0, 0, 3, 0, 2, 0, 0, 0, 3, 0, 2, 0, 0, 0, 251, 255, 4, 0, 0, 0, 8, 0, 3, 0, 0, 0, 240, 255, 1, 0, 0, 0, 4, 0, 5, 0, 0, 0)
+tile_set = SubResource("TileSet_fc0e3")
+
+[node name="Art" type="Node" parent="."]
+
+[node name="CactiPixelRemovebgPreview2" type="Sprite2D" parent="Art"]
+z_index = -2
+position = Vector2(158, 68.99999)
+scale = Vector2(0.21685077, 0.219697)
+texture = ExtResource("4_vef74")
+
+[node name="CactiPixel3(1)" type="Sprite2D" parent="Art"]
+z_index = -2
+position = Vector2(61, 72)
+scale = Vector2(0.29646015, 0.23986486)
+texture = ExtResource("5_mfdv2")
+
+[node name="CactiPixelRemovebgPreview3" type="Sprite2D" parent="Art"]
+z_index = -2
+position = Vector2(-31.999985, 70)
+scale = Vector2(0.21685077, 0.219697)
+texture = ExtResource("4_vef74")
+
+[node name="CactiPixel2(1)" type="Sprite2D" parent="Art"]
+z_index = -2
+position = Vector2(257, 70)
+scale = Vector2(0.2983871, 0.3141892)
+texture = ExtResource("6_iotsf")
+
+[node name="Background" type="Sprite2D" parent="Art"]
+z_index = -3
+position = Vector2(135.00002, -39)
+scale = Vector2(1.312802, 1.2894523)
+texture = ExtResource("2_eow3j")
+
+[node name="Floor" type="Node" parent="."]
+
+[node name="FloorOutline" type="Sprite2D" parent="Floor"]
+modulate = Color(0.96862745, 1, 1, 1)
+self_modulate = Color(0.08297095, 0.0689553, 1.7473427e-08, 1)
+z_index = -1
+position = Vector2(87, 45)
+scale = Vector2(1.375, 0.9857143)
+texture = ExtResource("4_j5wjh")
+
+[node name="floor" type="Sprite2D" parent="Floor"]
+modulate = Color(0.96862745, 1, 1, 1)
+self_modulate = Color(1.0676453, 1.008, 0.6241101, 1)
+z_index = -1
+position = Vector2(90, 48.000008)
+scale = Vector2(1.3848001, 0.9657143)
+texture = ExtResource("4_j5wjh")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Floor/floor"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/floor/StaticBody2D"]
+position = Vector2(-1.0831909, 107.6923)
+shape = SubResource("RectangleShape2D_hve3p")
+
+[node name="Castle" parent="." instance=ExtResource("3_feb5d")]
+z_index = 1
+position = Vector2(-206, 110)
+
+[node name="Coins" type="Node" parent="."]
+
+[node name="Coin" parent="Coins" instance=ExtResource("7_j5wjh")]
+position = Vector2(-86, 57)
+
+[node name="Coin2" parent="Coins" instance=ExtResource("7_j5wjh")]
+position = Vector2(-62, 39)
+
+[node name="Coin3" parent="Coins" instance=ExtResource("7_j5wjh")]
+position = Vector2(-39, 57)
+
+[node name="Enemy" type="Node" parent="."]
+
+[node name="player" parent="." instance=ExtResource("1_80nbo")]
+z_index = 1
+position = Vector2(-110, 82)
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+position = Vector2(52, -60)
+offset = Vector2(0, 7)
+zoom = Vector2(3.5, 3.5)
+script = ExtResource("13_7sc4i")
+
+[node name="CoinLabel" type="Label" parent="player/Camera2D"]
+offset_left = 106.0
+offset_top = -77.0
+offset_right = 155.0
+offset_bottom = -69.0
+theme_override_fonts/font = ExtResource("13_lc2xo")
+theme_override_font_sizes/font_size = 8
+text = "Coins: 0"
+horizontal_alignment = 2
+script = ExtResource("14_215e1")
+
+[node name="ShopButton" type="Button" parent="player"]
+offset_left = -107.0
+offset_top = -140.0
+offset_right = -62.0
+offset_bottom = -121.0
+theme_override_fonts/font = ExtResource("13_lc2xo")
+theme_override_font_sizes/font_size = 8
+text = "Shop"
+
+[node name="ShopWindow" type="PanelContainer" parent="player"]
+offset_left = 18.0
+offset_top = -117.0
+offset_right = 203.0
+offset_bottom = -31.0
+
+[node name="Label" type="Label" parent="player/ShopWindow"]
+layout_mode = 2
+text = "Welcom to the Shop!"
+horizontal_alignment = 1
+
+[node name="HUD" type="CanvasLayer" parent="player"]
+script = ExtResource("16_80cx4")
+manager_path = NodePath("../../GameManager")
+
+[node name="WaveLabel" type="Label" parent="player/HUD"]
+offset_left = -89.0
+offset_top = -56.0
+offset_right = -46.0
+offset_bottom = -33.0
+text = "WAve 1"
+
+[node name="TimerLabel" type="Label" parent="player/HUD"]
+offset_left = -83.0
+offset_top = -38.0
+offset_right = -35.0
+offset_bottom = 11.0
+text = "TIMER
+"
+
+[connection signal="pressed" from="player/ShopButton" to="player/Camera2D" method="_on_shop_button_pressed"]
+[connection signal="pressed" from="player/ShopButton" to="player/ShopWindow" method="_on_shop_pressed"]

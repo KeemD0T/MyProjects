@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://jwx4xplbmmvi"
+path="res://.godot/imported/completion_7_karen.wav-8f0582888614db077915b9221e91c23b.sample"
+
+[deps]
+
+source_file="res://assets/Super Dialogue Audio Pack v1/Step 2 - Audio Files/1 - Completion/Female/Karen Cenon/completion_7_karen.wav"
+dest_files=["res://.godot/imported/completion_7_karen.wav-8f0582888614db077915b9221e91c23b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

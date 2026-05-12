@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://brc0jlqmc34o6"
+path="res://.godot/imported/video-game-jump-soundeffect-37532.mp3-adf3bcbe8def0a75bffc931c45214cfb.mp3str"
+
+[deps]
+
+source_file="res://Sounds/SFX/jumping sound/video-game-jump-soundeffect-37532.mp3"
+dest_files=["res://.godot/imported/video-game-jump-soundeffect-37532.mp3-adf3bcbe8def0a75bffc931c45214cfb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

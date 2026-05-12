@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://brai4hr4nllmm"]
+
+[ext_resource type="Script" uid="uid://cbpit5rv5o5d8" path="res://scenes/death_screen.gd" id="1_uyutr"]
+[ext_resource type="Texture2D" uid="uid://caqw2x71yiffo" path="res://Screen Art/Lose/ValidLosingScreen.png" id="2_mqh5l"]
+[ext_resource type="AudioStream" uid="uid://cav6rf7vejo8t" path="res://Sounds/SFX/game over sound/kl-peach-game-over-ii-135684.mp3" id="4_7ns25"]
+[ext_resource type="FontFile" uid="uid://c71meuy6p8gcb" path="res://assets/fonts/PixelOperator8.ttf" id="6_wraau"]
+
+[node name="DeathScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_uyutr")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -3.0
+offset_top = -14.0
+offset_right = 1146.0
+offset_bottom = 656.0
+texture = ExtResource("2_mqh5l")
+
+[node name="LayoutBox" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 298.00003
+offset_top = 434.0
+offset_right = 701.33344
+offset_bottom = 486.0
+scale = Vector2(1.5, 1.5)
+
+[node name="PlayAgain" type="Button" parent="LayoutBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wraau")
+text = "Play Again"
+
+[node name="Quit" type="Button" parent="LayoutBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wraau")
+text = "Quit
+"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(571, 334)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_7ns25")
+volume_db = -11.13
+autoplay = true
+
+[connection signal="pressed" from="LayoutBox/PlayAgain" to="." method="_on_play_again_pressed"]
+[connection signal="pressed" from="LayoutBox/Quit" to="." method="_on_quit_pressed"]

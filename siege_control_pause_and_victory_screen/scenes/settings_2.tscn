@@ -1,0 +1,182 @@
+[gd_scene load_steps=8 format=3 uid="uid://dwo8ag8ur46uh"]
+
+[ext_resource type="Texture2D" uid="uid://cgf2f4t8upqfo" path="res://assets/Shop Art/Shop_Art_1.PNG" id="1_fknco"]
+[ext_resource type="Script" uid="uid://dnqqhqkbmd878" path="res://scenes/settings_2.gd" id="1_pddwb"]
+[ext_resource type="Texture2D" uid="uid://b70m8004xrupr" path="res://assets/Shop Art/Shop_Bar.PNG" id="2_chtve"]
+[ext_resource type="FontFile" uid="uid://d1r7kik1pjse2" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="3_nou00"]
+[ext_resource type="Texture2D" uid="uid://bc0fpjpk08o4b" path="res://assets/Shop Art/No_shop_Button.PNG" id="4_pddwb"]
+[ext_resource type="Texture2D" uid="uid://s6bcmxaify11" path="res://assets/Shop Art/Shop_button1.PNG" id="5_nou00"]
+[ext_resource type="FontFile" uid="uid://c71meuy6p8gcb" path="res://assets/fonts/PixelOperator8.ttf" id="7_rao1n"]
+
+[node name="Settings2" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -850.0
+offset_bottom = -258.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pddwb")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 238.0
+offset_bottom = 321.0
+scale = Vector2(1.2596685, 1.2511628)
+texture = ExtResource("1_fknco")
+
+[node name="ShopBar" type="Sprite2D" parent="."]
+position = Vector2(177, 57)
+scale = Vector2(1.9327117, 2.1933334)
+texture = ExtResource("2_chtve")
+
+[node name="Label" type="Label" parent="ShopBar"]
+offset_left = -35.44243
+offset_top = -9.802431
+offset_right = 84.55757
+offset_bottom = 13.197569
+scale = Vector2(0.6375791, 0.8773006)
+theme_override_fonts/font = ExtResource("3_nou00")
+theme_override_font_sizes/font_size = 16
+text = "Settings"
+
+[node name="ExitButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 29.0
+offset_right = 46.0
+offset_bottom = 59.0
+scale = Vector2(1.9090909, 1.6)
+texture_normal = ExtResource("4_pddwb")
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 90.99999
+offset_right = 183.26175
+offset_bottom = 347.0
+scale = Vector2(1.6767153, 1.0950726)
+
+[node name="SliderContainer" type="VBoxContainer" parent="VBoxContainer4"]
+layout_mode = 2
+
+[node name="Music Volume" type="Label" parent="VBoxContainer4/SliderContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_nou00")
+theme_override_font_sizes/font_size = 8
+text = "Music Volume"
+
+[node name="MusicSlider" type="HSlider" parent="VBoxContainer4/SliderContainer"]
+layout_mode = 2
+min_value = -10.0
+max_value = 10.0
+
+[node name="Label" type="Label" parent="VBoxContainer4/SliderContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_nou00")
+theme_override_font_sizes/font_size = 8
+text = "SFX Volume"
+
+[node name="sfxSlider" type="HSlider" parent="VBoxContainer4/SliderContainer"]
+layout_mode = 2
+min_value = -10.0
+max_value = 10.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer4"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ButtonContainer" type="VBoxContainer" parent="VBoxContainer4/HBoxContainer"]
+layout_mode = 2
+
+[node name="JumpButton" type="TextureButton" parent="VBoxContainer4/HBoxContainer/ButtonContainer"]
+layout_mode = 2
+texture_normal = ExtResource("5_nou00")
+
+[node name="JumpLabel" type="Label" parent="VBoxContainer4/HBoxContainer/ButtonContainer/JumpButton"]
+layout_mode = 0
+offset_left = 2.3856173
+offset_top = 16.35997
+offset_right = 48.385616
+offset_bottom = 39.35997
+rotation = -0.010588527
+theme_override_fonts/font = ExtResource("7_rao1n")
+theme_override_font_sizes/font_size = 8
+text = "Space"
+
+[node name="LeftButton" type="TextureButton" parent="VBoxContainer4/HBoxContainer/ButtonContainer"]
+layout_mode = 2
+texture_normal = ExtResource("5_nou00")
+
+[node name="LeftLabel" type="Label" parent="VBoxContainer4/HBoxContainer/ButtonContainer/LeftButton"]
+layout_mode = 0
+offset_left = 13.105076
+offset_top = 8.1213
+offset_right = 26.210152
+offset_bottom = 31.1213
+theme_override_fonts/font = ExtResource("7_rao1n")
+theme_override_font_sizes/font_size = 16
+text = "A"
+
+[node name="RightButton" type="TextureButton" parent="VBoxContainer4/HBoxContainer/ButtonContainer"]
+layout_mode = 2
+texture_normal = ExtResource("5_nou00")
+
+[node name="RightLabel" type="Label" parent="VBoxContainer4/HBoxContainer/ButtonContainer/RightButton"]
+layout_mode = 0
+offset_left = 13.105076
+offset_top = 8.1213
+offset_right = 26.210152
+offset_bottom = 31.1213
+theme_override_fonts/font = ExtResource("7_rao1n")
+text = "D"
+
+[node name="AttackButton" type="TextureButton" parent="VBoxContainer4/HBoxContainer/ButtonContainer"]
+layout_mode = 2
+texture_normal = ExtResource("5_nou00")
+
+[node name="AttackLabel" type="Label" parent="VBoxContainer4/HBoxContainer/ButtonContainer/AttackButton"]
+layout_mode = 0
+offset_left = 13.105076
+offset_top = 8.1213
+offset_right = 26.210152
+offset_bottom = 31.1213
+theme_override_fonts/font = ExtResource("7_rao1n")
+text = "F"
+
+[node name="Text Container" type="VBoxContainer" parent="VBoxContainer4/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="JumpLable" type="Label" parent="VBoxContainer4/HBoxContainer/Text Container"]
+layout_mode = 2
+text = "Jump button"
+
+[node name="Space2" type="Label" parent="VBoxContainer4/HBoxContainer/Text Container"]
+layout_mode = 2
+
+[node name="LeftLabel" type="Label" parent="VBoxContainer4/HBoxContainer/Text Container"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Move Left"
+
+[node name="Space" type="Label" parent="VBoxContainer4/HBoxContainer/Text Container"]
+layout_mode = 2
+
+[node name="Rightlabel" type="Label" parent="VBoxContainer4/HBoxContainer/Text Container"]
+layout_mode = 2
+text = "Move Right"
+
+[node name="Space3" type="Label" parent="VBoxContainer4/HBoxContainer/Text Container"]
+layout_mode = 2
+
+[node name="AttackLabel" type="Label" parent="VBoxContainer4/HBoxContainer/Text Container"]
+layout_mode = 2
+text = "Attack"
+
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="changed" from="VBoxContainer4/SliderContainer/MusicSlider" to="." method="_on_music_slider_changed"]
+[connection signal="changed" from="VBoxContainer4/SliderContainer/sfxSlider" to="." method="_on_sfx_slider_changed"]

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://hwpajf4c87u0"
+path="res://.godot/imported/clean-fast-swooshaiff-14784.mp3-e27bfbd0d035ab049d9a4dc2d5c62f81.mp3str"
+
+[deps]
+
+source_file="res://Sounds/SFX/Swiing sounds/clean-fast-swooshaiff-14784.mp3"
+dest_files=["res://.godot/imported/clean-fast-swooshaiff-14784.mp3-e27bfbd0d035ab049d9a4dc2d5c62f81.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
