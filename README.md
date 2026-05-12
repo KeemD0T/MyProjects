@@ -1,7 +1,44 @@
 # MyProjects
 Hakeems Projects :)
 
+# Movie Checkout System
 
+A full-stack movie rental web applicaton build using Java Spring MVC and Hibernate SQL and has a built in REST API for data. 
+The web application allows users to browse movies, checkout/return movies, insert new movies,and view 
+
+### Features
+- Customer management
+- Movie inventory system
+- Checkout & return functionality
+- Search functionality
+- REST API endpoints
+- MySQL database integration
+- JSP frontend with custom CSS styling
+- 
+### Tech Stack
+- Java
+- Spring MVC
+- Hibernate
+- MySQL
+- JSP
+- Maven
+- Apache Tomcat
+
+### Architecture
+The Website has a multi-layered format
+-Controller Layer
+-Service Layer
+-DAO layer
+-Entity Layer
+
+### REST API endpoints
+- '/api/movies'
+- '/api/customers'
+- '/api/checkouts'
+
+  ----
+
+  
 # Siege Control
 
 **Siege Control** is a 2D medieval fantasy tower defense game where players defend their kingdom against increasingly difficult waves of enemies. The game focuses on strategy, resource management, and player decision-making under pressure, creating a fun and replayable experience.
